@@ -2,9 +2,9 @@ import pdb
 import numpy as np
 import streamlit as st
 from streamlit import caching 
-from bokeh.models.widgets import Button
-from bokeh.models import CustomJS
-from streamlit_bokeh_events import streamlit_bokeh_events
+#from bokeh.models.widgets import Button
+#from bokeh.models import CustomJS
+#from streamlit_bokeh_events import streamlit_bokeh_events
 from io import StringIO
 import pandas as pd
 import altair as alt
@@ -20,25 +20,25 @@ def get_df():
 
 df=get_df()
 
-copy_button = Button(label="Get Clipboard Data")
+#copy_button = Button(label="Get Clipboard Data")
 
+textuse=st.text_area('paste Clipboard')
 
+#copy_button.js_on_event("button_click", CustomJS(code="""
+#    navigator.clipboard.readText().then(text => document.dispatchEvent(new CustomEvent("GET_TEXT", {detail: text})))
+#    """))
+#result = streamlit_bokeh_events(
+#    copy_button,
+#    events="GET_TEXT",
+#    key="get_text",
+#    refresh_on_update=False,
+#    override_height=75,
+#    debounce_time=0)
 
-copy_button.js_on_event("button_click", CustomJS(code="""
-    navigator.clipboard.readText().then(text => document.dispatchEvent(new CustomEvent("GET_TEXT", {detail: text})))
-    """))
-result = streamlit_bokeh_events(
-    copy_button,
-    events="GET_TEXT",
-    key="get_text",
-    refresh_on_update=False,
-    override_height=75,
-    debounce_time=0)
-
-if result:
-    if "GET_TEXT" in result:
-        dfnew = pd.read_table(StringIO(result.get("GET_TEXT")))
-     
+if textuse:
+    if True: #"GET_TEXT" in result:
+        #dfnew = pd.read_table(StringIO(result.get("GET_TEXT")))
+        dfnew = pd.read_table(StringIO(textuse))
         pasted=st.selectbox('Pasted from:',['choose which source','cDNA','DNA'],key=session.run_id)
         print(pasted)
         with st.beta_expander('show data'):
