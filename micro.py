@@ -17,6 +17,11 @@ session = SessionState.get(run_id=0)
 def get_df():
     return []
 
+st.write('MetaGenomics Viewer')
+new=st.button('Start a fresh session')
+if new:
+    caching.clear_cache()
+
 
 df=get_df()
 
